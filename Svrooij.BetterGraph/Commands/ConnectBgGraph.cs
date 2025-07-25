@@ -114,7 +114,7 @@ public class ConnectBgGraph : DependencyCmdlet<Startup>
     [Parameter(
     Mandatory = false,
     Position = 10,
-    ParameterSetName = ParamSetInteractive,
+    ParameterSetName = ParamSetClientCredentials,
     ValueFromPipeline = false,
     ValueFromPipelineByPropertyName = false,
     HelpMessage = "Specify the scopes to request, default is `https://graph.microsoft.com/.default`")]
