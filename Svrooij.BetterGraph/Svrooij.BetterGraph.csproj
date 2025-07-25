@@ -1,0 +1,59 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	  <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+	  <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
+	  <PowerShellDocsFile>Svrooij.BetterGraph.dll-Help.xml</PowerShellDocsFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" Version="1.47.1" />
+    <PackageReference Include="Azure.Identity" Version="1.14.2" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Graph.Beta" Version="5.116.0-preview" />
+    <PackageReference Include="Microsoft.Identity.Client.Broker" Version="4.74.1" />
+    <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.74.1" />
+    <PackageReference Include="Microsoft.Kiota.Authentication.Azure" Version="1.19.0" />
+    <PackageReference Include="Microsoft.Kiota.Http.HttpClientLibrary" Version="1.19.0" />
+    <PackageReference Include="Microsoft.Kiota.Serialization.Json" Version="1.19.0" />
+    <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.4.11" />
+    <PackageReference Include="Svrooij.PowerShell.DI" Version="1.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Svrooij.BetterGraph.dll-Help.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Svrooij.BetterGraph.psd1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Svrooij.BetterGraph.psm1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+	<!-- This part is to automatically generate the mandatory powershell docs file -->
+	<!-- It uses the pwsh-docs tool to generate the documentation file from the compiled DLL -->
+	<!-- Install using dotnet tool install -g SvRooij.PowerShell.Docs -->
+    <Target Name="GenerateDocumentation" AfterTargets="AfterBuild" Outputs="$(PowerShellDocsFile)" Condition="!Exists($(PowerShellDocsFile))">
+	    <Message Text="Generating $(PowerShellDocsFile)" Importance="high" />
+	    <Message Text="Project path $(ProjectDir)" Importance="high" />
+	    <Message Text="Output path $(OutputPath)" Importance="high" />
+	    <Exec Command="pwsh-docs --dll $(ProjectDir)$(OutputPath)\Svrooij.BetterGraph.dll --use-xml-docs --maml-file $(ProjectDir)\$(PowerShellDocsFile)" />
+	    <OnError ExecuteTargets="DocsGenerationError" />
+    </Target>
+    <Target Name="DocsGenerationError">
+		<Message Text="Install tool using dotnet tool install -g SvRooij.PowerShell.Docs" />
+	    <Error Text="Documentation could not be generated" />
+    </Target>
+    <Target Name="RemoveDocumentation" AfterTargets="CoreClean">
+	    <Delete Files="$(PowerShellDocsFile)" />
+    </Target>
+
+</Project>

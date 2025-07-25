@@ -1,0 +1,765 @@
+<?xml version="1.0" encoding="utf-8"?>
+<helpItems schema="maml" xmlns="http://msh">
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10">
+    <command:details>
+      <command:name>Connect-BgGraph</command:name>
+      <command:verb>Connect</command:verb>
+      <command:noun>BgGraph</command:noun>
+      <maml:description>
+        <maml:para>Connect to Microsoft Graph</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>As with the regular module, you'll need to connect to Graph.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Connect-BgGraph</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+          <maml:name>Username</maml:name>
+          <maml:description>
+            <maml:para>Use a username to trigger interactive login or SSO</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
+          <maml:name>Scopes</maml:name>
+          <maml:description>
+            <maml:para>Specify the scopes to request</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+          <maml:name>NoBroker</maml:name>
+          <maml:description>
+            <maml:para>Disable Windows authentication broker</maml:para>
+          </maml:description>
+          <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+          <maml:name>TenantId</maml:name>
+          <maml:description>
+            <maml:para>Specify the tenant ID, optional. Loaded from `AZURE_TENANT_ID`</maml:para>
+          </maml:description>
+          <command:parameterValue required="false" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>ClientId</maml:name>
+          <maml:description>
+            <maml:para>Specify the alternative client ID, optional. Loaded from `AZURE_CLIENT_ID`</maml:para>
+          </maml:description>
+          <command:parameterValue required="false" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
+          <maml:name>Scopes</maml:name>
+          <maml:description>
+            <maml:para>Specify the scopes to request, default is `https://graph.microsoft.com/.default`</maml:para>
+          </maml:description>
+          <command:parameterValue required="false" variableLength="true">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Connect-BgGraph</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+          <maml:name>UseDefaultCredentials</maml:name>
+          <maml:description>
+            <maml:para>Use default Azure Credentials from Azure.Identity to connect to Intune</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">SwitchParameter</command:parameterValue>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Connect-BgGraph</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+          <maml:name>Token</maml:name>
+          <maml:description>
+            <maml:para>Use a token from another source to connect to Intune, this is the least preferred way to use</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Connect-BgGraph</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>TenantId</maml:name>
+          <maml:description>
+            <maml:para>Specify the tenant ID. Loaded from `AZURE_TENANT_ID`</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+          <maml:name>ClientId</maml:name>
+          <maml:description>
+            <maml:para>Specify the client ID. Loaded from `AZURE_CLIENT_ID`</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>ClientSecret</maml:name>
+          <maml:description>
+            <maml:para>Specify the client secret. Loaded from `AZURE_CLIENT_SECRET`</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+        <maml:name>Username</maml:name>
+        <maml:description>
+          <maml:para>Use a username to trigger interactive login or SSO</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <maml:name>TenantId</maml:name>
+        <maml:description>
+          <maml:para>Specify the tenant ID, optional. Loaded from `AZURE_TENANT_ID`</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <maml:name>NoBroker</maml:name>
+        <maml:description>
+          <maml:para>Disable Windows authentication broker</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>ClientId</maml:name>
+        <maml:description>
+          <maml:para>Specify the alternative client ID, optional. Loaded from `AZURE_CLIENT_ID`</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>ClientSecret</maml:name>
+        <maml:description>
+          <maml:para>Specify the client secret. Loaded from `AZURE_CLIENT_SECRET`</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
+        <maml:name>Scopes</maml:name>
+        <maml:description>
+          <maml:para>Specify the scopes to request</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+        <maml:name>Token</maml:name>
+        <maml:description>
+          <maml:para>Use a token from another source to connect to Intune, this is the least preferred way to use</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+        <maml:name>UseDefaultCredentials</maml:name>
+        <maml:description>
+          <maml:para>Use default Azure Credentials from Azure.Identity to connect to Intune</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:examples />
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10">
+    <command:details>
+      <command:name>Get-BgUser</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>BgUser</command:noun>
+      <maml:description>
+        <maml:para>List users or get single user</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>\r\n\r\nThis is an [**authenticated command**](./authentication), so call [Connect-BgGraph](./Connect-BgGraph) before calling this command.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-BgUser</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+          <maml:name>UserId</maml:name>
+          <maml:description>
+            <maml:para />
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
+          <maml:name>Select</maml:name>
+          <maml:description>
+            <maml:para />
+          </maml:description>
+          <command:parameterValue required="false" variableLength="true">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-BgUser</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
+          <maml:name>Filter</maml:name>
+          <maml:description>
+            <maml:para />
+          </maml:description>
+          <command:parameterValue required="false" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
+          <maml:name>Select</maml:name>
+          <maml:description>
+            <maml:para />
+          </maml:description>
+          <command:parameterValue required="false" variableLength="true">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="12" aliases="none">
+          <maml:name>Top</maml:name>
+          <maml:description>
+            <maml:para />
+          </maml:description>
+          <command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="13" aliases="none">
+          <maml:name>All</maml:name>
+          <maml:description>
+            <maml:para />
+          </maml:description>
+          <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-BgUser</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+          <maml:name>NextLink</maml:name>
+          <maml:description>
+            <maml:para />
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+        <maml:name>UserId</maml:name>
+        <maml:description>
+          <maml:para />
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
+        <maml:name>Filter</maml:name>
+        <maml:description>
+          <maml:para />
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
+        <maml:name>Select</maml:name>
+        <maml:description>
+          <maml:para />
+        </maml:description>
+        <command:parameterValue required="false" variableLength="true">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="12" aliases="none">
+        <maml:name>Top</maml:name>
+        <maml:description>
+          <maml:para />
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="13" aliases="none">
+        <maml:name>All</maml:name>
+        <maml:description>
+          <maml:para />
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+        <maml:name>NextLink</maml:name>
+        <maml:description>
+          <maml:para />
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>Microsoft.Graph.Beta.Models.User</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>Microsoft.Graph.Beta.Models.User</maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <command:examples>
+      <command:example>
+        <maml:title>-----------------  Get top 10 users and select few parameters  -----------------</maml:title>
+        <dev:code>PS C:\&gt; Get-BgUser -Top 10 -Select Id, DisplayName, UserPrincipalName | Format-table -Property Id, DisplayName, UserPrincipalName</dev:code>
+        <dev:remarks>
+          <maml:para>Get a list of first 10 users in this tenant, and format the result as a table.
+</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------------  Get user by id  -------------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-BgUser -UserId "8195b446-e1dd-4064-a410-a1494d1ffe1b" | Format-List</dev:code>
+        <dev:remarks>
+          <maml:para>Get a single user by id (or user principal name)
+</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>--------------------------------  Auto paging  ---------------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-BgUser -Top 10 -All -Select Id, DisplayName, UserPrincipalName | Format-Table -Property Id, DisplayName, UserPrincipalName</dev:code>
+        <dev:remarks>
+          <maml:para>Let the module auto page over all results in pages of 10, you'll get the Users async as long as you use them in a pipe
+</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------------  Manual paging  --------------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-BgUser -NextLink $GetBgUserNextLink | Format-Table -Property Id, DisplayName, UserPrincipalName</dev:code>
+        <dev:remarks>
+          <maml:para>If you get users and do not set the `-All` parameter, it will set the `$GetBgUserNextLink` if there are more pages. Use this code to get the next page.
+</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10">
+    <command:details>
+      <command:name>New-BgUser</command:name>
+      <command:verb>New</command:verb>
+      <command:noun>BgUser</command:noun>
+      <maml:description>
+        <maml:para>Create a new user in Microsoft Graph.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>
+             This is an authenticated command, so call Connect-BgGraph before using this command.
+             </maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>New-BgUser</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>UserPrincipalName</maml:name>
+          <maml:description>
+            <maml:para />
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+          <maml:name>DisplayName</maml:name>
+          <maml:description>
+            <maml:para />
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>Password</maml:name>
+          <maml:description>
+            <maml:para />
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>New-BgUser</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>User</maml:name>
+          <maml:description>
+            <maml:para />
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">User</command:parameterValue>
+          <dev:type>
+            <maml:name>User</maml:name>
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+          <maml:name>Password</maml:name>
+          <maml:description>
+            <maml:para />
+          </maml:description>
+          <command:parameterValue required="false" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>UserPrincipalName</maml:name>
+        <maml:description>
+          <maml:para />
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <maml:name>DisplayName</maml:name>
+        <maml:description>
+          <maml:para />
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>Password</maml:name>
+        <maml:description>
+          <maml:para />
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>User</maml:name>
+        <maml:description>
+          <maml:para />
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">User</command:parameterValue>
+        <dev:type>
+          <maml:name>User</maml:name>
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>Microsoft.Graph.Beta.Models.User</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>Microsoft.Graph.Beta.Models.User</maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <command:examples>
+      <command:example>
+        <maml:title>----------------------------  Create a simple user  ----------------------------</maml:title>
+        <dev:code>PS C:\&gt; New-BgUser -UserPrincipalName "john.doe@contoso.com" -DisplayName "John Doe" -Password "P@ssw0rd!"</dev:code>
+        <dev:remarks>
+          <maml:para>Create a user with a display name, user principal name, and password.
+</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>----------------------  Create a user from a user object  ----------------------</maml:title>
+        <dev:code>PS C:\&gt; $user = [Microsoft.Graph.Beta.Models.User]::new()
+             $user.UserPrincipalName = "jane.doe@contoso.com"
+             $user.DisplayName = "Jane Doe"
+             New-BgUser -User $user -Password "AnotherP@ssw0rd!"</dev:code>
+        <dev:remarks>
+          <maml:para>Create a user by passing a pre-configured User object.
+</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10">
+    <command:details>
+      <command:name>Remove-BgUser</command:name>
+      <command:verb>Remove</command:verb>
+      <command:noun>BgUser</command:noun>
+      <maml:description>
+        <maml:para>Remove a user from Microsoft Graph.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>
+            This is an authenticated command, so call Connect-BgGraph before using this command.
+            </maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Remove-BgUser</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+          <maml:name>UserId</maml:name>
+          <maml:description>
+            <maml:para />
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+        <maml:name>UserId</maml:name>
+        <maml:description>
+          <maml:para />
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.Boolean</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>System.Boolean</maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <command:examples>
+      <command:example>
+        <maml:title>----------------------------  Remove a user by ID  -----------------------------</maml:title>
+        <dev:code>PS C:\&gt; Remove-BgUser -UserId "8195b446-e1dd-4064-a410-a1494d1ffe1b"</dev:code>
+        <dev:remarks>
+          <maml:para>Delete a user by specifying their unique ID.
+</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10">
+    <command:details>
+      <command:name>Set-BgUser</command:name>
+      <command:verb>Set</command:verb>
+      <command:noun>BgUser</command:noun>
+      <maml:description>
+        <maml:para>Update an existing user in Microsoft Graph.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>
+            This is an authenticated command, so call Connect-BgGraph before using this command.
+            Use this command to modify properties of an existing user by specifying their UserId and a User object with updated values.
+            </maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Set-BgUser</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+          <maml:name>UserId</maml:name>
+          <maml:description>
+            <maml:para />
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>User</maml:name>
+          <maml:description>
+            <maml:para />
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">User</command:parameterValue>
+          <dev:type>
+            <maml:name>User</maml:name>
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+        <maml:name>UserId</maml:name>
+        <maml:description>
+          <maml:para />
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>User</maml:name>
+        <maml:description>
+          <maml:para />
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">User</command:parameterValue>
+        <dev:type>
+          <maml:name>User</maml:name>
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>Microsoft.Graph.Beta.Models.User</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>Microsoft.Graph.Beta.Models.User</maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <command:examples>
+      <command:example>
+        <maml:title>------------------------  Update a user's display name  ------------------------</maml:title>
+        <dev:code>PS C:\&gt; 
+            $user = [Microsoft.Graph.Beta.Models.User]::new()
+            # Or get the user from Get-BgUser and modify it
+            $user.DisplayName = "New Display Name"
+            Set-BgUser -UserId "8195b446-e1dd-4064-a410-a1494d1ffe1b" -User $user</dev:code>
+        <dev:remarks>
+          <maml:para>Change the display name of a user by specifying their ID and a user object with the new display name.
+</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+  </command:command>
+</helpItems>
