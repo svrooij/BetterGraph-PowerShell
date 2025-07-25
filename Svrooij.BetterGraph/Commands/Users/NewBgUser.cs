@@ -63,7 +63,7 @@ public partial class NewBgUser : DependencyCmdlet<GraphStartup>
         {
             UserPrincipalName = UserPrincipalName,
             DisplayName = DisplayName,
-            
+
         }
         : User ?? throw new ArgumentNullException(nameof(User), "User cannot be null when using the Object parameter set.");
         // Ensure the PasswordProfile is set, if not provided, generate a random password

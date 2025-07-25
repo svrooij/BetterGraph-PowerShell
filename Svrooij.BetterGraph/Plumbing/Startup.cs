@@ -12,6 +12,6 @@ public class Startup : PsStartup
 {
     public override void ConfigureServices(IServiceCollection services)
     {
-        
+
     }
 }

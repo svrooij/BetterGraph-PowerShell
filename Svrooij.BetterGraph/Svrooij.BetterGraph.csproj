@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
 	  <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
 	  <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
 	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
 	  <PowerShellDocsFile>Svrooij.BetterGraph.dll-Help.xml</PowerShellDocsFile>
   </PropertyGroup>
@@ -36,6 +37,8 @@
     <None Update="Svrooij.BetterGraph.psm1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+	  <None Include="..\README.md" Pack="true" PackagePath="\README.md" />
+	  <None Include="..\LICENSE.txt" Pack="true" PackagePath="\LICENSE.txt" />
   </ItemGroup>
 
 	<!-- This part is to automatically generate the mandatory powershell docs file -->

@@ -14,7 +14,7 @@
     # Company or vendor that produced this module.
     CompanyName = 'Stephan van Rooij'
 
-    Copyright = 'Stephan van Rooij 2025, licensed under GNU GPLv3'
+    Copyright = 'Stephan van Rooij 2025, licensed under MIT License (MIT)'
 
     # Description of this module.
     Description = 'A faster Graph module'
@@ -71,7 +71,7 @@
         "Svrooij.BetterGraph.dll",
         "Svrooij.BetterGraph.dll-Help.xml",
         "Svrooij.BetterGraph.psd1",
-        "Svrooij.BetterGraph.psm1",
+        "Svrooij.BetterGraph.psm1"
     )
 
     # Private data to pass to the module specified in RootModule/ModuleToProcess.
@@ -79,12 +79,12 @@
         PSData = @{
             Tags = @('Microsoft', 'Graph', 'Faster')
 
-            LisenceUri = 'https://github.com/svrooij/WingetIntune/blob/main/LICENSE.txt'
-            ProjectUri = 'https://github.com/svrooij/'
+            LisenceUri = 'https://github.com/svrooij/BetterGraph-PowerShell?tab=MIT-1-ov-file'
+            ProjectUri = 'https://github.com/svrooij/BetterGraph-PowerShell'
             ReleaseNotes = 'This module is still a work-in-progress. Changes might be made without notice.'
         }
     }
 
     # HelpInfo URI of this module.
-    HelpInfoURI = 'https://svrooij.io/'
+    HelpInfoURI = 'https://github.com/svrooij/BetterGraph-PowerShell'
 }

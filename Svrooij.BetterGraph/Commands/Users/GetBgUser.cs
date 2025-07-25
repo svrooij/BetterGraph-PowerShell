@@ -78,7 +78,7 @@ public partial class GetBgUser : DependencyCmdlet<GraphStartup>
     [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSetMultiplePaging)]
     public string? NextLink { get; set; }
 
-    
+
     [ServiceDependency(Required = true)]
     private ILogger<GetBgUser>? logger;
 

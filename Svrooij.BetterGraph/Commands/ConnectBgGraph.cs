@@ -159,11 +159,13 @@ public class ConnectBgGraph : DependencyCmdlet<Startup>
         else if (this.ParameterSetName == ParamSetInteractive)
         {
             logger?.LogInformation("Using interactive authentication for connecting to Microsoft Graph");
-            AuthenticationProvider = new Plumbing.InteractiveAuthenticationProvider(new Plumbing.InteractiveAuthenticationProviderOptions {
+            AuthenticationProvider = new Plumbing.InteractiveAuthenticationProvider(new Plumbing.InteractiveAuthenticationProviderOptions
+            {
                 Username = this.Username,
                 TenantId = this.TenantId,
                 ClientId = this.ClientId,
-                Scopes = this.Scopes! });
+                Scopes = this.Scopes!
+            });
         }
         else if (this.UseDefaultCredentials)
         {
@@ -174,7 +176,8 @@ public class ConnectBgGraph : DependencyCmdlet<Startup>
             });
             var scopes = this.Scopes ?? new[] { DefaultClientCredentialScope };
             AuthenticationProvider = new Microsoft.Graph.Authentication.AzureIdentityAuthenticationProvider(credentials, null, null, isCaeEnabled: false, scopes: scopes);
-        } else if (ParameterSetName == ParamSetClientCredentials)
+        }
+        else if (ParameterSetName == ParamSetClientCredentials)
         {
             if (!string.IsNullOrEmpty(ClientId) && !string.IsNullOrEmpty(TenantId) &&
                 !string.IsNullOrEmpty(ClientSecret))

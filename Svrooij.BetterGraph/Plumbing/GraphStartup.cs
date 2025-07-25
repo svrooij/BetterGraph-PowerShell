@@ -34,7 +34,7 @@ public class GraphStartup : PsStartup
     {
         return builder =>
         {
-            builder.DefaultLevel = Microsoft.Extensions.Logging.LogLevel.Debug; 
+            builder.DefaultLevel = Microsoft.Extensions.Logging.LogLevel.Debug;
             builder.LogLevel.Add("System.Net.Http.HttpClient.GraphClientFactory.LogicalHandler", Microsoft.Extensions.Logging.LogLevel.Information);
             builder.LogLevel.Add("System.Net.Http.HttpClient.GraphClientFactory", Microsoft.Extensions.Logging.LogLevel.Warning);
             builder.StripNamespace = true;
