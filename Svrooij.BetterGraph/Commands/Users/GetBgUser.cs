@@ -45,7 +45,6 @@ namespace Svrooij.BetterGraph.Commands.Users;
 /// <para type="name">UsersPaging</para>
 /// <para type="description">Get the next page of users using a NextLink from a previous response.</para>
 /// </parameterSet>
-// Get-BgUser supports Paging, but graph does NOT support paging by using a Skip parameter in the request, in fact it does paging by creating a NextLink in the response.
 [Cmdlet(VerbsCommon.Get, "BgUser", DefaultParameterSetName = ParameterSetMultiple)]
 [OutputType(typeof(Microsoft.Graph.Beta.Models.User))]
 [GenerateBindings]
@@ -56,28 +55,45 @@ public partial class GetBgUser : DependencyCmdlet<GraphStartup>
     private const string ParameterSetMultiple = "Users";
     private const string ParameterSetMultiplePaging = "UsersPaging";
 
-    [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSetSingle)]
+    /// <summary>
+    /// Gets or sets the unique identifier or user principal name of the user to retrieve.
+    /// </summary>
+    [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSetSingle, HelpMessage = "The unique identifier or user principal name of the user to retrieve.")]
     public string? UserId { get; set; }
 
     // --------------------- Multiple Users ---------------------
-    [Parameter(Mandatory = false, Position = 10, ParameterSetName = ParameterSetMultiple)]
+    /// <summary>
+    /// Gets or sets the OData filter to apply when retrieving users.
+    /// </summary>
+    [Parameter(Mandatory = false, Position = 10, ParameterSetName = ParameterSetMultiple, HelpMessage = "OData filter to apply when retrieving users.")]
     public string? Filter { get; set; }
-    [Parameter(Mandatory = false, Position = 11, ValueFromPipeline = false, ParameterSetName = ParameterSetMultiple)]
-    [Parameter(Mandatory = false, Position = 11, ValueFromPipeline = false, ParameterSetName = ParameterSetSingle)]
+
+    /// <summary>
+    /// Gets or sets the properties to select for each user.
+    /// </summary>
+    [Parameter(Mandatory = false, Position = 11, ValueFromPipeline = false, ParameterSetName = ParameterSetMultiple, HelpMessage = "Properties to select for each user.")]
+    [Parameter(Mandatory = false, Position = 11, ValueFromPipeline = false, ParameterSetName = ParameterSetSingle, HelpMessage = "Properties to select for the user.")]
     public string[]? Select { get; set; }
 
-    [Parameter(Mandatory = false, Position = 12, ParameterSetName = ParameterSetMultiple)]
+    /// <summary>
+    /// Gets or sets the maximum number of users to return.
+    /// </summary>
+    [Parameter(Mandatory = false, Position = 12, ParameterSetName = ParameterSetMultiple, HelpMessage = "Maximum number of users to return.")]
     public int? Top { get; set; } = 25;
 
-    [Parameter(Mandatory = false, Position = 13, ParameterSetName = ParameterSetMultiple)]
+    /// <summary>
+    /// Gets or sets a value indicating whether to retrieve all users using auto-paging.
+    /// </summary>
+    [Parameter(Mandatory = false, Position = 13, ParameterSetName = ParameterSetMultiple, HelpMessage = "Retrieve all users using auto-paging.")]
     public SwitchParameter All { get; set; } = false;
-
 
     // ---------------------- Multiple Users with Paging ---------------------
 
-    [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSetMultiplePaging)]
+    /// <summary>
+    /// Gets or sets the next link for paging through users.
+    /// </summary>
+    [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSetMultiplePaging, HelpMessage = "The next link for paging through users.")]
     public string? NextLink { get; set; }
-
 
     [ServiceDependency(Required = true)]
     private ILogger<GetBgUser>? logger;

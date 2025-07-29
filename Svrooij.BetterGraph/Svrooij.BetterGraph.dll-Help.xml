@@ -241,6 +241,24 @@
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10">
     <command:details>
+      <command:name>Disconnect-BgGraph</command:name>
+      <command:verb>Disconnect</command:verb>
+      <command:noun>BgGraph</command:noun>
+      <maml:description>
+        <maml:para>
+            Remove the authentication provider from the current session.
+            </maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para />
+    </maml:description>
+    <command:syntax />
+    <command:parameters />
+    <command:examples />
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10">
+    <command:details>
       <command:name>Get-BgUser</command:name>
       <command:verb>Get</command:verb>
       <command:noun>BgUser</command:noun>
@@ -257,7 +275,7 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
           <maml:name>UserId</maml:name>
           <maml:description>
-            <maml:para />
+            <maml:para>The unique identifier or user principal name of the user to retrieve.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -268,7 +286,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
           <maml:name>Select</maml:name>
           <maml:description>
-            <maml:para />
+            <maml:para>Properties to select for the user.</maml:para>
           </maml:description>
           <command:parameterValue required="false" variableLength="true">String[]</command:parameterValue>
           <dev:type>
@@ -282,7 +300,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
           <maml:name>Filter</maml:name>
           <maml:description>
-            <maml:para />
+            <maml:para>OData filter to apply when retrieving users.</maml:para>
           </maml:description>
           <command:parameterValue required="false" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -293,7 +311,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
           <maml:name>Select</maml:name>
           <maml:description>
-            <maml:para />
+            <maml:para>Properties to select for each user.</maml:para>
           </maml:description>
           <command:parameterValue required="false" variableLength="true">String[]</command:parameterValue>
           <dev:type>
@@ -304,7 +322,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="12" aliases="none">
           <maml:name>Top</maml:name>
           <maml:description>
-            <maml:para />
+            <maml:para>Maximum number of users to return.</maml:para>
           </maml:description>
           <command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -315,7 +333,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="13" aliases="none">
           <maml:name>All</maml:name>
           <maml:description>
-            <maml:para />
+            <maml:para>Retrieve all users using auto-paging.</maml:para>
           </maml:description>
           <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
           <dev:type>
@@ -329,7 +347,7 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
           <maml:name>NextLink</maml:name>
           <maml:description>
-            <maml:para />
+            <maml:para>The next link for paging through users.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -343,7 +361,7 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
         <maml:name>UserId</maml:name>
         <maml:description>
-          <maml:para />
+          <maml:para>The unique identifier or user principal name of the user to retrieve.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -354,7 +372,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
         <maml:name>Filter</maml:name>
         <maml:description>
-          <maml:para />
+          <maml:para>OData filter to apply when retrieving users.</maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -365,7 +383,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
         <maml:name>Select</maml:name>
         <maml:description>
-          <maml:para />
+          <maml:para>Properties to select for each user.</maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="true">String[]</command:parameterValue>
         <dev:type>
@@ -376,7 +394,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="12" aliases="none">
         <maml:name>Top</maml:name>
         <maml:description>
-          <maml:para />
+          <maml:para>Maximum number of users to return.</maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">Int32</command:parameterValue>
         <dev:type>
@@ -387,7 +405,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="13" aliases="none">
         <maml:name>All</maml:name>
         <maml:description>
-          <maml:para />
+          <maml:para>Retrieve all users using auto-paging.</maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -398,7 +416,7 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
         <maml:name>NextLink</maml:name>
         <maml:description>
-          <maml:para />
+          <maml:para>The next link for paging through users.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -472,7 +490,7 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>UserPrincipalName</maml:name>
           <maml:description>
-            <maml:para />
+            <maml:para>The user principal name for the new user.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -483,7 +501,7 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>DisplayName</maml:name>
           <maml:description>
-            <maml:para />
+            <maml:para>The display name for the new user.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -494,7 +512,7 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>Password</maml:name>
           <maml:description>
-            <maml:para />
+            <maml:para>The password for the new user.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -508,7 +526,7 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>User</maml:name>
           <maml:description>
-            <maml:para />
+            <maml:para>The user object to create.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">User</command:parameterValue>
           <dev:type>
@@ -519,7 +537,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>Password</maml:name>
           <maml:description>
-            <maml:para />
+            <maml:para>The password for the new user.</maml:para>
           </maml:description>
           <command:parameterValue required="false" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -533,7 +551,7 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>UserPrincipalName</maml:name>
         <maml:description>
-          <maml:para />
+          <maml:para>The user principal name for the new user.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -544,7 +562,7 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>DisplayName</maml:name>
         <maml:description>
-          <maml:para />
+          <maml:para>The display name for the new user.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -555,7 +573,7 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>Password</maml:name>
         <maml:description>
-          <maml:para />
+          <maml:para>The password for the new user.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -566,7 +584,7 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>User</maml:name>
         <maml:description>
-          <maml:para />
+          <maml:para>The user object to create.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">User</command:parameterValue>
         <dev:type>
@@ -627,7 +645,7 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
           <maml:name>UserId</maml:name>
           <maml:description>
-            <maml:para />
+            <maml:para>The unique identifier of the user to remove.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -641,7 +659,7 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
         <maml:name>UserId</maml:name>
         <maml:description>
-          <maml:para />
+          <maml:para>The unique identifier of the user to remove.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -692,7 +710,7 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
           <maml:name>UserId</maml:name>
           <maml:description>
-            <maml:para />
+            <maml:para>The unique identifier of the user to update.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -703,7 +721,7 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>User</maml:name>
           <maml:description>
-            <maml:para />
+            <maml:para>The user object containing updated properties.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">User</command:parameterValue>
           <dev:type>
@@ -717,7 +735,7 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
         <maml:name>UserId</maml:name>
         <maml:description>
-          <maml:para />
+          <maml:para>The unique identifier of the user to update.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -728,7 +746,7 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>User</maml:name>
         <maml:description>
-          <maml:para />
+          <maml:para>The user object containing updated properties.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">User</command:parameterValue>
         <dev:type>
