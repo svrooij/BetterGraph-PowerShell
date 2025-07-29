@@ -29,10 +29,16 @@ namespace Svrooij.BetterGraph.Commands.Users;
 [GenerateBindings]
 public partial class SetBgUser : DependencyCmdlet<GraphStartup>
 {
-    [Parameter(Mandatory = true, Position = 0)]
+    /// <summary>
+    /// Gets or sets the unique identifier of the user to update.
+    /// </summary>
+    [Parameter(Mandatory = true, Position = 0, HelpMessage = "The unique identifier of the user to update.")]
     public string? UserId { get; set; }
 
-    [Parameter(Mandatory = true, Position = 1)]
+    /// <summary>
+    /// Gets or sets the user object containing updated properties.
+    /// </summary>
+    [Parameter(Mandatory = true, Position = 1, HelpMessage = "The user object containing updated properties.")]
     public Microsoft.Graph.Beta.Models.User? User { get; set; }
 
     [ServiceDependency(Required = true)]

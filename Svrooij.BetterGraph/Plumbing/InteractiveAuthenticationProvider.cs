@@ -15,7 +15,7 @@ public sealed class InteractiveAuthenticationProvider : IAuthenticationProvider
     private readonly InteractiveAuthenticationProviderOptions _options;
     private readonly IPublicClientApplication publicClientApplication;
     private bool CacheLoaded = false;
-    private const string DefaultClientId = "d5a8a406-3b1d-4069-91cc-d76acdd812fe";
+    private const string DefaultClientId = "6fb61555-6571-4835-8f61-23bcce62844d";
     private AuthenticationResult? authenticationResult;
 
     private readonly SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);

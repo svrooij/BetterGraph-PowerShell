@@ -104,6 +104,9 @@ public class ConnectBgGraph : DependencyCmdlet<Startup>
                HelpMessage = "Specify the client secret. Loaded from `AZURE_CLIENT_SECRET`")]
     public string? ClientSecret { get; set; } = Environment.GetEnvironmentVariable("AZURE_CLIENT_SECRET");
 
+    /// <summary>
+    /// One or more scopes to request
+    /// </summary>
     [Parameter(
     Mandatory = true,
     Position = 10,
@@ -207,4 +210,9 @@ public class ConnectBgGraph : DependencyCmdlet<Startup>
     }
 
     internal static IAuthenticationProvider? AuthenticationProvider { get; private set; } = null;
+
+    internal static void ResetAuthenticationProvider()
+    {
+        AuthenticationProvider = null;
+    }
 }

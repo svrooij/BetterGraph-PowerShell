@@ -24,7 +24,10 @@ namespace Svrooij.BetterGraph.Commands.Users;
 [GenerateBindings]
 public partial class RemoveBgUser : DependencyCmdlet<GraphStartup>
 {
-    [Parameter(Mandatory = true, Position = 0)]
+    /// <summary>
+    /// Gets or sets the unique identifier of the user to remove.
+    /// </summary>
+    [Parameter(Mandatory = true, Position = 0, HelpMessage = "The unique identifier of the user to remove.")]
     public string? UserId { get; set; }
 
     [ServiceDependency(Required = true)]

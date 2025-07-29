@@ -42,17 +42,29 @@ public partial class NewBgUser : DependencyCmdlet<GraphStartup>
     private const string ParameterSetSimple = "Simple";
     private const string ParameterSetObject = "Object";
 
-    [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSetSimple)]
+    /// <summary>
+    /// Gets or sets the user principal name for the new user.
+    /// </summary>
+    [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSetSimple, HelpMessage = "The user principal name for the new user.")]
     public string UserPrincipalName { get; set; } = string.Empty;
 
-    [Parameter(Mandatory = true, Position = 2, ParameterSetName = ParameterSetSimple)]
+    /// <summary>
+    /// Gets or sets the display name for the new user.
+    /// </summary>
+    [Parameter(Mandatory = true, Position = 2, ParameterSetName = ParameterSetSimple, HelpMessage = "The display name for the new user.")]
     public string DisplayName { get; set; } = string.Empty;
 
-    [Parameter(Mandatory = true, Position = 3, ParameterSetName = ParameterSetSimple)]
-    [Parameter(Mandatory = false, Position = 2, ParameterSetName = ParameterSetObject)]
+    /// <summary>
+    /// Gets or sets the password for the new user.
+    /// </summary>
+    [Parameter(Mandatory = true, Position = 3, ParameterSetName = ParameterSetSimple, HelpMessage = "The password for the new user.")]
+    [Parameter(Mandatory = false, Position = 2, ParameterSetName = ParameterSetObject, HelpMessage = "The password for the new user.")]
     public string? Password { get; set; }
 
-    [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSetObject)]
+    /// <summary>
+    /// Gets or sets the user object to create.
+    /// </summary>
+    [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSetObject, HelpMessage = "The user object to create.")]
     public Microsoft.Graph.Beta.Models.User? User { get; set; }
 
     [ServiceDependency(Required = true)]
