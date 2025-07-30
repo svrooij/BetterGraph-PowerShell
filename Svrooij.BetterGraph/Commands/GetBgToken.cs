@@ -10,7 +10,7 @@ namespace Svrooij.BetterGraph.Commands;
 [Cmdlet(VerbsCommon.Get, "BgToken", DefaultParameterSetName = "Default")]
 [OutputType(typeof(string))]
 [GenerateBindings]
-public partial class GetBgToken: DependencyCmdlet<GraphStartup>
+public partial class GetBgToken : DependencyCmdlet<GraphStartup>
 {
     private const string AuthenticationScheme = "Bearer";
 
