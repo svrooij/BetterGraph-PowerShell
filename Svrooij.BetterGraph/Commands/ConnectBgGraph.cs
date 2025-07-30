@@ -76,6 +76,9 @@ public class ConnectBgGraph : DependencyCmdlet<Startup>
         HelpMessage = "Disable Windows authentication broker")]
     public SwitchParameter NoBroker { get; set; }
 
+    /// <summary>
+    /// Alternative client ID for interactive / client credentials login
+    /// </summary>
     [Parameter(
         Mandatory = false,
         Position = 3,
@@ -149,10 +152,10 @@ public class ConnectBgGraph : DependencyCmdlet<Startup>
 
 
     [ServiceDependency]
-    private ILogger<ConnectBgGraph>? logger;
+    private ILogger<ConnectBgGraph>? logger = default!;
 
     /// <inheritdoc />
-    public override async Task ProcessRecordAsync(CancellationToken cancellationToken)
+    public override Task ProcessRecordAsync(CancellationToken cancellationToken)
     {
         if (this.ParameterSetName == nameof(Token) && !string.IsNullOrWhiteSpace(this.Token))
         {
@@ -207,6 +210,8 @@ public class ConnectBgGraph : DependencyCmdlet<Startup>
         {
             throw new ArgumentException("Invalid parameter set or parameters provided.");
         }
+
+        return Task.CompletedTask;
     }
 
     internal static IAuthenticationProvider? AuthenticationProvider { get; private set; } = null;

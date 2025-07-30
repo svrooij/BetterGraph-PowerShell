@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.Graph.Beta.Models;
-using Microsoft.Identity.Client;
+﻿using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Broker;
 using Microsoft.Identity.Client.Extensions.Msal;
 using Microsoft.Kiota.Abstractions;
@@ -10,7 +7,14 @@ using System.Runtime.InteropServices;
 
 namespace Svrooij.BetterGraph.Plumbing;
 
-public sealed class InteractiveAuthenticationProvider : IAuthenticationProvider
+/// <summary>
+/// Provides an authentication provider that supports interactive user authentication using the Microsoft Authentication
+/// Library (MSAL).
+/// </summary>
+/// <remarks>This provider is designed to acquire tokens interactively or silently for accessing resources.
+/// It supports caching of authentication tokens and can be configured to use a broker for
+/// authentication on supported platforms.</remarks>
+internal sealed class InteractiveAuthenticationProvider : IAuthenticationProvider
 {
     private readonly InteractiveAuthenticationProviderOptions _options;
     private readonly IPublicClientApplication publicClientApplication;
@@ -20,6 +24,16 @@ public sealed class InteractiveAuthenticationProvider : IAuthenticationProvider
 
     private readonly SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="InteractiveAuthenticationProvider"/> class with the specified
+    /// options for interactive authentication.
+    /// </summary>
+    /// <remarks>This constructor sets up the authentication provider using the provided options. If the
+    /// client ID is not specified, a default client ID is used. The authentication flow can be customized with tenant
+    /// ID and broker options.</remarks>
+    /// <param name="options">The options used to configure the interactive authentication provider. Must include at least one scope and a
+    /// valid client ID.</param>
+    /// <exception cref="ArgumentException">Thrown if <paramref name="options"/> does not specify any scopes.</exception>
     public InteractiveAuthenticationProvider(InteractiveAuthenticationProviderOptions options)
     {
         if (options.Scopes is null || options.Scopes.Length == 0)
@@ -49,7 +63,7 @@ public sealed class InteractiveAuthenticationProvider : IAuthenticationProvider
 
         if (_options.UseBroker)
         {
-            builder.WithBroker(new BrokerOptions(BrokerOptions.OperatingSystems.Windows) { Title = "WinTuner" });
+            builder.WithBroker(new BrokerOptions(BrokerOptions.OperatingSystems.Windows) { Title = "Better Graph" });
         }
 
         publicClientApplication = builder.Build();
@@ -63,7 +77,7 @@ public sealed class InteractiveAuthenticationProvider : IAuthenticationProvider
             semaphoreSlim.Release();
             return;
         }
-        var storageProperties = new StorageCreationPropertiesBuilder(".accounts", Path.Combine(Path.GetTempPath(), "wintuner"))
+        var storageProperties = new StorageCreationPropertiesBuilder(".accounts", Path.Combine(Path.GetTempPath(), "better-graph"))
             .Build();
         var cacheHelper = await MsalCacheHelper.CreateAsync(storageProperties);
         cacheHelper.RegisterCache(publicClientApplication.UserTokenCache);
@@ -71,6 +85,14 @@ public sealed class InteractiveAuthenticationProvider : IAuthenticationProvider
         semaphoreSlim.Release();
     }
 
+    /// <summary>
+    /// Gets an access token for the specified scopes, tenant ID, and user ID.
+    /// </summary>
+    /// <param name="scopes"></param>
+    /// <param name="tenantId"></param>
+    /// <param name="userId"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public async Task<AuthenticationResult> AccuireTokenAsync(IEnumerable<string> scopes, string? tenantId = null, string? userId = null, CancellationToken cancellationToken = default)
     {
         if (!CacheLoaded)
@@ -99,6 +121,14 @@ public sealed class InteractiveAuthenticationProvider : IAuthenticationProvider
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="scopes"></param>
+    /// <param name="tenantId"></param>
+    /// <param name="userId"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public async Task<AuthenticationResult> AcquireTokenInteractiveAsync(IEnumerable<string> scopes, string? tenantId = null, string? userId = null, CancellationToken cancellationToken = default)
     {
         using var timeoutCancellation = new CancellationTokenSource(120000);
@@ -128,6 +158,14 @@ public sealed class InteractiveAuthenticationProvider : IAuthenticationProvider
         return authenticationResult = await builder.ExecuteAsync(combinedCancellation.Token);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="additionalAuthenticationContext"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public async Task AuthenticateRequestAsync(RequestInformation request, Dictionary<string, object>? additionalAuthenticationContext = null, CancellationToken cancellationToken = default)
     {
         if (request is null)
@@ -145,12 +183,37 @@ public sealed class InteractiveAuthenticationProvider : IAuthenticationProvider
     }
 }
 
+/// <summary>
+/// Represents the options for configuring an interactive authentication provider.
+/// </summary>
+/// <remarks>This class is used to specify the settings required for interactive authentication, including the
+/// scopes for which access is requested, and optional parameters such as the client ID, tenant ID, and username. The
+/// <see cref="UseBroker"/> property defaults to <see langword="true"/> on Windows platforms.</remarks>
 public class InteractiveAuthenticationProviderOptions
 {
+    /// <summary>
+    /// One or more scopes for which the access token is requested.
+    /// </summary>
     public required string[] Scopes { get; set; }
+
+    /// <summary>
+    /// Should the authentication provider use a broker for authentication?
+    /// </summary>
     public bool UseBroker { get; set; } = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+
+    /// <summary>
+    /// Username to use for authentication, if applicable. Used for auto filling the login
+    /// </summary>
     public string? Username { get; set; }
+
+    /// <summary>
+    /// Gets or sets the client identifier.
+    /// </summary>
     public string? ClientId { get; set; }
+
+    /// <summary>
+    /// The tenant ID to use for authentication. If not specified, the default tenant is used.
+    /// </summary>
     public string? TenantId { get; set; }
 }
 

@@ -99,10 +99,11 @@ public partial class GetBgUser : DependencyCmdlet<GraphStartup>
     private ILogger<GetBgUser>? logger;
 
     [ServiceDependency(Required = true)]
-    private Microsoft.Graph.Beta.GraphServiceClient graphClient;
+    private Microsoft.Graph.Beta.GraphServiceClient graphClient = default!;
 
     private SynchronizationContext? synchronizationContext;
 
+    /// <inheritdoc />
     public override async Task ProcessRecordAsync(CancellationToken cancellationToken)
     {
         synchronizationContext = SynchronizationContext.Current;
@@ -160,7 +161,7 @@ public partial class GetBgUser : DependencyCmdlet<GraphStartup>
                     req.QueryParameters.Top = Top;
                     req.QueryParameters.Filter = Filter;
                 }),
-                async (user) =>
+                (user) =>
                 {
                     if (synchronizationContext != null)
                     {

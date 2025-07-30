@@ -68,7 +68,9 @@ public partial class NewBgUser : DependencyCmdlet<GraphStartup>
     public Microsoft.Graph.Beta.Models.User? User { get; set; }
 
     [ServiceDependency(Required = true)]
-    private Microsoft.Graph.Beta.GraphServiceClient graphClient;
+    private Microsoft.Graph.Beta.GraphServiceClient graphClient = default!;
+
+    /// <inheritdoc />
     public override async Task ProcessRecordAsync(CancellationToken cancellationToken)
     {
         var user = ParameterSetName == ParameterSetSimple ? new Microsoft.Graph.Beta.Models.User

@@ -9,6 +9,7 @@
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
 	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
 	  <PowerShellDocsFile>Svrooij.BetterGraph.dll-Help.xml</PowerShellDocsFile>
+	  <NoWarn>CS0649</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
