@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace Svrooij.BetterGraph;
 
+/// <inheritdoc />
 public class Startup : PsStartup
 {
+    /// <inheritdoc />
     public override void ConfigureServices(IServiceCollection services)
     {
 

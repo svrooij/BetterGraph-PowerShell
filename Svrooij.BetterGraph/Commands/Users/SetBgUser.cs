@@ -42,7 +42,9 @@ public partial class SetBgUser : DependencyCmdlet<GraphStartup>
     public Microsoft.Graph.Beta.Models.User? User { get; set; }
 
     [ServiceDependency(Required = true)]
-    private Microsoft.Graph.Beta.GraphServiceClient graphClient;
+    private Microsoft.Graph.Beta.GraphServiceClient graphClient = default!;
+
+    /// <inheritdoc />
     public override async Task ProcessRecordAsync(CancellationToken cancellationToken)
     {
         var updatedUser = await graphClient!.Users[UserId!].PatchAsync(User!, cancellationToken: cancellationToken);

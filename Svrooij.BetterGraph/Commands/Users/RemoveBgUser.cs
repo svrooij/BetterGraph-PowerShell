@@ -31,7 +31,9 @@ public partial class RemoveBgUser : DependencyCmdlet<GraphStartup>
     public string? UserId { get; set; }
 
     [ServiceDependency(Required = true)]
-    private Microsoft.Graph.Beta.GraphServiceClient graphClient;
+    private Microsoft.Graph.Beta.GraphServiceClient graphClient = default!;
+
+    /// <inheritdoc />
     public override async Task ProcessRecordAsync(CancellationToken cancellationToken)
     {
         await graphClient!.Users[UserId!].DeleteAsync(cancellationToken: cancellationToken);
