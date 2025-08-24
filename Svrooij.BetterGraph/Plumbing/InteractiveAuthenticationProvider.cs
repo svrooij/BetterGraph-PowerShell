@@ -152,7 +152,8 @@ internal sealed class InteractiveAuthenticationProvider : IAuthenticationProvide
 
         if (_options.UseBroker)
         {
-            builder = builder.WithParentActivityOrWindow(BrokerHandle.GetConsoleOrTerminalWindow());
+            builder = builder
+                .WithParentActivityOrWindow(BrokerHandle.GetConsoleOrTerminalWindow());
         }
 
         return authenticationResult = await builder.ExecuteAsync(combinedCancellation.Token);
