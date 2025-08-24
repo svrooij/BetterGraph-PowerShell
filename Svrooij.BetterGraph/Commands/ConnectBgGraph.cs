@@ -170,7 +170,8 @@ public class ConnectBgGraph : DependencyCmdlet<Startup>
                 Username = this.Username,
                 TenantId = this.TenantId,
                 ClientId = this.ClientId,
-                Scopes = this.Scopes!
+                Scopes = this.Scopes!,
+                UseBroker = !NoBroker
             });
         }
         else if (this.UseDefaultCredentials)
