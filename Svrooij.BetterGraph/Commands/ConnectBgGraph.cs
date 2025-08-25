@@ -215,7 +215,37 @@ public class ConnectBgGraph : DependencyCmdlet<Startup>
         return Task.CompletedTask;
     }
 
+    internal static async Task LoadUserIdAsync(ILogger? logger, CancellationToken cancellationToken)
+    {
+        if (AuthenticationProvider is null)
+        {
+            throw new InvalidOperationException("Not authenticated, please run Connect-BgGraph first");
+        }
+        if (CurrentUserId is not null)
+        {
+            // Already loaded
+            return;
+        }
+        var graphClient = new Microsoft.Graph.Beta.GraphServiceClient(AuthenticationProvider);
+        try
+        {
+            var user = await graphClient.Me.GetAsync(cancellationToken: cancellationToken);
+            CurrentUserId = user!.Id;
+            logger?.LogInformation("Connected to Microsoft Graph as user {UserId}", CurrentUserId);
+        }
+        catch (Exception ex)
+        {
+            logger?.LogInformation(ex, "Failed to load current user information from Microsoft Graph");
+        }
+    }
+
     internal static IAuthenticationProvider? AuthenticationProvider { get; private set; } = null;
+
+    /// <summary>
+    /// The user ID of the currently authenticated user, if delegated authentication is used.
+    /// </summary>
+    /// <remarks>This property is loaded from graph after authentication.</remarks>
+    internal static string? CurrentUserId { get; set; } = null;
 
     internal static void ResetAuthenticationProvider()
     {
