@@ -24,7 +24,7 @@ namespace Svrooij.BetterGraph.Commands.Teams;
 [OutputType(typeof(bool))]
 [GenerateBindings]
 [Alias("Restore-EduGroupAccess")]
-public class RestoreBgEduGroupAccess : DependencyCmdlet<GraphStartup>
+public partial class RestoreBgEduGroupAccess : DependencyCmdlet<GraphStartup>
 {
     private const string ParameterSetDefault = "Default";
     private readonly Dictionary<string, string> neededAccess = new Dictionary<string, string>
@@ -82,24 +82,23 @@ public class RestoreBgEduGroupAccess : DependencyCmdlet<GraphStartup>
                 }
                 if (owners.Value.Any(o => o.Id == Commands.ConnectBgGraph.CurrentUserId) == false)
                 {
-                    logger?.LogDebug("Adding current user as owner to group {GroupId}", Id);
+                    logger?.LogInformation("Adding current user {UserId} as owner to group {GroupId}", Commands.ConnectBgGraph.CurrentUserId, Id);
                     await graphClient.Groups[Id].Owners.Ref.PostAsync(new ReferenceCreate
                     {
-                        OdataId = $"https://graph.microsoft.com/beta/directoryObjects/{Commands.ConnectBgGraph.CurrentUserId}"
+                        OdataId = $"https://graph.microsoft.com/beta/users/{ConnectBgGraph.CurrentUserId!}",
                     }, cancellationToken: cancellationToken);
                     shouldRemoveOwner = true;
                 }
             }
 
-            // Get site id
+            // Get site id for group, you'll need to be an owner (maybe member?) of the group to do this
+            logger?.LogInformation("Getting root site for group {GroupId}", Id);
             var rootSite = await graphClient.Groups[Id].Sites["root"].GetAsync(cancellationToken: cancellationToken);
             if (rootSite is null || rootSite.Id is null)
             {
                 logger?.LogWarning("Could not get root site for group {GroupId}", Id);
                 return;
             }
-
-
 
             // Validate app permissions are not there
             var currentPermissions = await graphClient.Sites[rootSite.Id].Permissions.GetAsync(cancellationToken: cancellationToken);
@@ -136,7 +135,7 @@ public class RestoreBgEduGroupAccess : DependencyCmdlet<GraphStartup>
             }
             if (shouldRemoveOwner)
             {
-                logger?.LogDebug("Removing current user as owner from group {GroupId}", Id);
+                logger?.LogInformation("Removing current user as owner from group {GroupId}", Id);
                 await graphClient.Groups[Id].Owners[Commands.ConnectBgGraph.CurrentUserId!].Ref.DeleteAsync(cancellationToken: cancellationToken);
             }
         }
