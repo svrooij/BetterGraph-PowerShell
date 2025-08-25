@@ -156,9 +156,9 @@
       },
       "Svrooij.PowerShell.DI": {
         "type": "Direct",
-        "requested": "[1.3.0, )",
-        "resolved": "1.3.0",
-        "contentHash": "t1j5PUMvZ3U6SeYtEQ36r5h+ryVUJVoq/s+R9QSNjG5AkjscUj+VvoGWBfnCQLHWM7xK5LIg+oDIBUc38yXkUQ=="
+        "requested": "[1.3.2, )",
+        "resolved": "1.3.2",
+        "contentHash": "LFk/eTN+aKNvbWZko94tgWf7J+mDl4LOJ36Ziu3nDECW4Zy0EGTpqZQ8v59rYPsRwBTgjLkWFiO7oOoz/6DHSA=="
       },
       "Humanizer.Core": {
         "type": "Transitive",
