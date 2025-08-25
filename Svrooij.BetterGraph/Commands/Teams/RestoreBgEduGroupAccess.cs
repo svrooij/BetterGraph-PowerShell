@@ -4,7 +4,7 @@ using Microsoft.Graph.Beta.Models;
 using Svrooij.PowerShell.DI;
 using System.Management.Automation;
 
-namespace Svrooij.BetterGraph.Commands.Groups;
+namespace Svrooij.BetterGraph.Commands.Teams;
 
 /// <summary>
 /// <para type="synopsis">Fix access for EduGroup</para>
@@ -14,16 +14,17 @@ namespace Svrooij.BetterGraph.Commands.Groups;
 /// <example>
 /// <para type="name">Fix all groups</para>
 /// <para type="description">Get all groups that match the filter, and process them.</para>
-/// <code>Get-BgGroup -All -Top 50 -Select Id,DisplayName | Restore-EduGroupAccess </code>
+/// <code>Get-BgGroup -All -Top 50 -Select Id,DisplayName | Restore-BgEduGroupAccess </code>
 /// </example>
 /// <parameterSet>
 /// <para type="name">Default</para>
 /// <para type="description"></para>
 /// </parameterSet>
-[Cmdlet(VerbsData.Restore, "EduGroupAccess", DefaultParameterSetName = ParameterSetDefault)]
+[Cmdlet(VerbsData.Restore, "BgEduGroupAccess", DefaultParameterSetName = ParameterSetDefault)]
 [OutputType(typeof(bool))]
 [GenerateBindings]
-public class RestoreEduGroupAccess : DependencyCmdlet<GraphStartup>
+[Alias("Restore-EduGroupAccess")]
+public class RestoreBgEduGroupAccess : DependencyCmdlet<GraphStartup>
 {
     private const string ParameterSetDefault = "Default";
     private readonly Dictionary<string, string> neededAccess = new Dictionary<string, string>
@@ -41,14 +42,21 @@ public class RestoreEduGroupAccess : DependencyCmdlet<GraphStartup>
     [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ParameterSetName = ParameterSetDefault, HelpMessage = "The unique identifier of the group to fix.")]
     public string? Id { get; set; }
 
+    /// <summary>
+    /// Should you be added as an owner before the permissions are changed, and removed afterwards?
+    /// </summary>
+    [Parameter(Mandatory = false, ParameterSetName = ParameterSetDefault, HelpMessage = "Should you be added as an owner before the permissions are changed, and removed afterwards?")]
+    public SwitchParameter ModifyOwners { get; set; }
+
     [ServiceDependency(Required = true)]
-    private ILogger<RestoreEduGroupAccess>? logger;
+    private ILogger<RestoreBgEduGroupAccess>? logger;
 
     [ServiceDependency(Required = true)]
     private Microsoft.Graph.Beta.GraphServiceClient graphClient = default!;
 
     private SynchronizationContext? synchronizationContext;
 
+    /// <inheritdoc />
     public override async Task ProcessRecordAsync(CancellationToken cancellationToken)
     {
         synchronizationContext = SynchronizationContext.Current;
@@ -68,6 +76,32 @@ public class RestoreEduGroupAccess : DependencyCmdlet<GraphStartup>
                 return;
             }
 
+            
+            bool shouldRemoveOwner = false;
+            if (ModifyOwners)
+            {
+                await ConnectBgGraph.LoadUserIdAsync(logger, cancellationToken);
+                var owners = await graphClient.Groups[Id].Owners.GetAsync(req =>
+                {
+                    req.QueryParameters.Select = new[] { "id" };
+                }, cancellationToken: cancellationToken);
+                if (owners is null || owners.Value is null)
+                {
+                    logger?.LogWarning("Could not get owners for group {GroupId}", Id);
+                    return;
+                }
+                if (owners.Value.Any(o => o.Id == Commands.ConnectBgGraph.CurrentUserId) == false)
+                {
+                    logger?.LogDebug("Adding current user as owner to group {GroupId}", Id);
+                    await graphClient.Groups[Id].Owners.Ref.PostAsync(new ReferenceCreate
+                    {
+                        OdataId = $"https://graph.microsoft.com/beta/users/{Commands.ConnectBgGraph.CurrentUserId}"
+                    }, cancellationToken: cancellationToken);
+                    shouldRemoveOwner = true;
+                }
+            }
+            
+
             // Validate app permissions are not there
             var currentPermissions = await graphClient.Sites[rootSite.Id].Permissions.GetAsync(cancellationToken: cancellationToken);
             logger?.LogDebug("Current permissions: {Permissions}", currentPermissions?.Value?.Count ?? 0);
@@ -83,7 +117,7 @@ public class RestoreEduGroupAccess : DependencyCmdlet<GraphStartup>
                 }
                 logger?.LogDebug("Adding access to {AppName} for group {GroupId}", access.Value, Id);
                 AppsToAdd.Add(access.Value);
-                await addPermissionsBatch.AddBatchRequestStepAsync(graphClient.Sites[rootSite.Id].Permissions.ToPostRequestInformation(new Microsoft.Graph.Beta.Models.Permission
+                await addPermissionsBatch.AddBatchRequestStepAsync(graphClient.Sites[rootSite.Id].Permissions.ToPostRequestInformation(new Permission
                 {
                     Roles = ["fullcontrol"],
                     GrantedToIdentities = [
@@ -100,6 +134,11 @@ public class RestoreEduGroupAccess : DependencyCmdlet<GraphStartup>
             else
             {
                 logger?.LogDebug("No permissions to add for group {GroupId}", Id);
+            }
+            if (shouldRemoveOwner)
+            {
+                logger?.LogDebug("Removing current user as owner from group {GroupId}", Id);
+                await graphClient.Groups[Id].Owners[Commands.ConnectBgGraph.CurrentUserId!].Ref.DeleteAsync(cancellationToken: cancellationToken);
             }
         }
         catch (Exception ex)
