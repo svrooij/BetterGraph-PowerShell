@@ -85,7 +85,7 @@ public class RestoreBgEduGroupAccess : DependencyCmdlet<GraphStartup>
                     logger?.LogDebug("Adding current user as owner to group {GroupId}", Id);
                     await graphClient.Groups[Id].Owners.Ref.PostAsync(new ReferenceCreate
                     {
-                        OdataId = $"https://graph.microsoft.com/v1.0/directoryObjects/{Commands.ConnectBgGraph.CurrentUserId}"
+                        OdataId = $"https://graph.microsoft.com/beta/directoryObjects/{Commands.ConnectBgGraph.CurrentUserId}"
                     }, cancellationToken: cancellationToken);
                     shouldRemoveOwner = true;
                 }
