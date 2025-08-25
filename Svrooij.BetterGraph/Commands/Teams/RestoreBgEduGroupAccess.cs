@@ -67,15 +67,6 @@ public class RestoreBgEduGroupAccess : DependencyCmdlet<GraphStartup>
 
         try
         {
-
-            // Get site id
-            var rootSite = await graphClient.Groups[Id].Sites["root"].GetAsync(cancellationToken: cancellationToken);
-            if (rootSite is null || rootSite.Id is null)
-            {
-                logger?.LogWarning("Could not get root site for group {GroupId}", Id);
-                return;
-            }
-
             bool shouldRemoveOwner = false;
             if (ModifyOwners)
             {
@@ -94,11 +85,21 @@ public class RestoreBgEduGroupAccess : DependencyCmdlet<GraphStartup>
                     logger?.LogDebug("Adding current user as owner to group {GroupId}", Id);
                     await graphClient.Groups[Id].Owners.Ref.PostAsync(new ReferenceCreate
                     {
-                        OdataId = $"https://graph.microsoft.com/beta/users/{Commands.ConnectBgGraph.CurrentUserId}"
+                        OdataId = $"https://graph.microsoft.com/beta/directoryObjects/{Commands.ConnectBgGraph.CurrentUserId}"
                     }, cancellationToken: cancellationToken);
                     shouldRemoveOwner = true;
                 }
             }
+
+            // Get site id
+            var rootSite = await graphClient.Groups[Id].Sites["root"].GetAsync(cancellationToken: cancellationToken);
+            if (rootSite is null || rootSite.Id is null)
+            {
+                logger?.LogWarning("Could not get root site for group {GroupId}", Id);
+                return;
+            }
+
+
 
             // Validate app permissions are not there
             var currentPermissions = await graphClient.Sites[rootSite.Id].Permissions.GetAsync(cancellationToken: cancellationToken);
@@ -141,7 +142,7 @@ public class RestoreBgEduGroupAccess : DependencyCmdlet<GraphStartup>
         }
         catch (Exception ex)
         {
-            logger?.LogWarning(ex, "Error processing group {GroupId}: {Message}", Id, ex.Message);
+            logger?.LogError(ex, "Error processing group {GroupId}: {Message}", Id, ex.Message);
             return;
 
         }
