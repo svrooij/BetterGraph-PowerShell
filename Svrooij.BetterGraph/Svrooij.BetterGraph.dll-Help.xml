@@ -881,7 +881,7 @@
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>In March 2025, Microsoft stopped unconnected access to edu groups, breaking edu functionallity like Assignments and Class notebook. This command fixes that.\r\n\r\nThis is an [**authenticated command**](./authentication), so call [Connect-BgGraph](./Connect-BgGraph) before calling this command.</maml:para>
+      <maml:para>In March 2025, Microsoft stopped unconnected access to edu Team sites, breaking edu functionallity like Assignments and Class notebook. This command fixes that. Scopes required `User.Read`, `Group.ReadWrite.All` and `Sites.FullControl.All` \r\n\r\nThis is an [**authenticated command**](./authentication), so call [Connect-BgGraph](./Connect-BgGraph) before calling this command.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -947,7 +947,7 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------------  Fix all groups  -------------------------------</maml:title>
-        <dev:code>PS C:\&gt; Get-BgGroup -All -Top 50 -Select Id,DisplayName | Restore-BgEduGroupAccess </dev:code>
+        <dev:code>PS C:\&gt; Get-BgGroup -All -Top 50 -Select Id,DisplayName | Restore-BgEduGroupAccess -ModifyOwners</dev:code>
         <dev:remarks>
           <maml:para>Get all groups that match the filter, and process them.
 </maml:para>

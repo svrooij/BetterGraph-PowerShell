@@ -179,7 +179,7 @@ public class ConnectBgGraph : DependencyCmdlet<Startup>
             logger?.LogInformation("Using default Azure credentials for connecting to Microsoft Graph");
             TokenCredential credentials = new Azure.Identity.DefaultAzureCredential(new Azure.Identity.DefaultAzureCredentialOptions
             {
-                ExcludeSharedTokenCacheCredential = false, // Avoid using the shared token cache to prevent conflicts with other applications
+
             });
             var scopes = this.Scopes ?? new[] { DefaultClientCredentialScope };
             AuthenticationProvider = new Microsoft.Graph.Authentication.AzureIdentityAuthenticationProvider(credentials, null, null, isCaeEnabled: false, scopes: scopes);
@@ -231,7 +231,7 @@ public class ConnectBgGraph : DependencyCmdlet<Startup>
         {
             var user = await graphClient.Me.GetAsync(cancellationToken: cancellationToken);
             CurrentUserId = user!.Id;
-            logger?.LogInformation("Connected to Microsoft Graph as user {UserId}", CurrentUserId);
+            logger?.LogDebug("Connected to Microsoft Graph as user {UserId}", CurrentUserId);
         }
         catch (Exception ex)
         {
@@ -245,10 +245,11 @@ public class ConnectBgGraph : DependencyCmdlet<Startup>
     /// The user ID of the currently authenticated user, if delegated authentication is used.
     /// </summary>
     /// <remarks>This property is loaded from graph after authentication.</remarks>
-    internal static string? CurrentUserId { get; set; } = null;
+    internal static string? CurrentUserId { get; private set; } = null;
 
     internal static void ResetAuthenticationProvider()
     {
         AuthenticationProvider = null;
+        CurrentUserId = null;
     }
 }

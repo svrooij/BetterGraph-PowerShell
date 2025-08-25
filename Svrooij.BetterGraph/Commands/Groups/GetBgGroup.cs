@@ -196,7 +196,7 @@ public partial class GetBgGroup : DependencyCmdlet<GraphStartup>
         }
         else
         {
-            logger?.LogWarning("No groups found or an error occurred while retrieving users.");
+            logger?.LogWarning("No groups found or an error occurred while retrieving groups.");
         }
     }
 
