@@ -76,7 +76,6 @@ public class RestoreBgEduGroupAccess : DependencyCmdlet<GraphStartup>
                 return;
             }
 
-            
             bool shouldRemoveOwner = false;
             if (ModifyOwners)
             {
@@ -100,7 +99,6 @@ public class RestoreBgEduGroupAccess : DependencyCmdlet<GraphStartup>
                     shouldRemoveOwner = true;
                 }
             }
-            
 
             // Validate app permissions are not there
             var currentPermissions = await graphClient.Sites[rootSite.Id].Permissions.GetAsync(cancellationToken: cancellationToken);
