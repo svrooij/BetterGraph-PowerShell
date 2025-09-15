@@ -8,13 +8,13 @@ namespace Svrooij.BetterGraph.Commands.Teams;
 
 /// <summary>
 /// <para type="synopsis">Fix access for EduGroup</para>
-/// <para type="description">In March 2025, Microsoft stopped unconnected access to edu groups, breaking edu functionallity like Assignments and Class notebook. This command fixes that.\r\n\r\nThis is an [**authenticated command**](./authentication), so call [Connect-BgGraph](./Connect-BgGraph) before calling this command.</para>
+/// <para type="description">In March 2025, Microsoft stopped unconnected access to edu Team sites, breaking edu functionallity like Assignments and Class notebook. This command fixes that. Scopes required `User.Read`, `Group.ReadWrite.All` and `Sites.FullControl.All` \r\n\r\nThis is an [**authenticated command**](./authentication), so call [Connect-BgGraph](./Connect-BgGraph) before calling this command.</para>
 /// </summary>
 /// <psOrder>100</psOrder>
 /// <example>
 /// <para type="name">Fix all groups</para>
 /// <para type="description">Get all groups that match the filter, and process them.</para>
-/// <code>Get-BgGroup -All -Top 50 -Select Id,DisplayName | Restore-BgEduGroupAccess </code>
+/// <code>Get-BgGroup -All -Top 50 -Select Id,DisplayName | Restore-BgEduGroupAccess -ModifyOwners</code>
 /// </example>
 /// <parameterSet>
 /// <para type="name">Default</para>
@@ -60,9 +60,18 @@ public partial class RestoreBgEduGroupAccess : DependencyCmdlet<GraphStartup>
     public override async Task ProcessRecordAsync(CancellationToken cancellationToken)
     {
         synchronizationContext = SynchronizationContext.Current;
+
         if (Id is null)
         {
             throw new ArgumentNullException(nameof(Id));
+        }
+
+        await ConnectBgGraph.LoadUserIdAsync(logger, cancellationToken);
+
+        if (string.IsNullOrEmpty(Commands.ConnectBgGraph.CurrentUserId) && ModifyOwners)
+        {
+            logger?.LogError("Could not get current user id, are you connected?");
+            return;
         }
 
         try
@@ -80,19 +89,23 @@ public partial class RestoreBgEduGroupAccess : DependencyCmdlet<GraphStartup>
                     logger?.LogWarning("Could not get owners for group {GroupId}", Id);
                     return;
                 }
-                if (owners.Value.Any(o => o.Id == Commands.ConnectBgGraph.CurrentUserId) == false)
+                if (owners.Value.Any(o => o.Id == Commands.ConnectBgGraph.CurrentUserId!) == false)
                 {
-                    logger?.LogInformation("Adding current user {UserId} as owner to group {GroupId}", Commands.ConnectBgGraph.CurrentUserId, Id);
+                    logger?.LogDebug("Adding current user {UserId} as owner to group {GroupId}", Commands.ConnectBgGraph.CurrentUserId, Id);
                     await graphClient.Groups[Id].Owners.Ref.PostAsync(new ReferenceCreate
                     {
                         OdataId = $"https://graph.microsoft.com/beta/users/{ConnectBgGraph.CurrentUserId!}",
                     }, cancellationToken: cancellationToken);
                     shouldRemoveOwner = true;
                 }
+                else
+                {
+                    logger?.LogDebug("Current user {UserId} is already an owner of group {GroupId}", Commands.ConnectBgGraph.CurrentUserId, Id);
+                }
             }
 
             // Get site id for group, you'll need to be an owner (maybe member?) of the group to do this
-            logger?.LogInformation("Getting root site for group {GroupId}", Id);
+            logger?.LogDebug("Getting root site for group {GroupId}", Id);
             var rootSite = await graphClient.Groups[Id].Sites["root"].GetAsync(cancellationToken: cancellationToken);
             if (rootSite is null || rootSite.Id is null)
             {
@@ -102,7 +115,7 @@ public partial class RestoreBgEduGroupAccess : DependencyCmdlet<GraphStartup>
 
             // Validate app permissions are not there
             var currentPermissions = await graphClient.Sites[rootSite.Id].Permissions.GetAsync(cancellationToken: cancellationToken);
-            logger?.LogDebug("Current permissions: {Permissions}", currentPermissions?.Value?.Count ?? 0);
+            logger?.LogDebug("Current permission count: {PermissionCount}", currentPermissions?.Value?.Count ?? 0);
 
             var addPermissionsBatch = new BatchRequestContentCollection(graphClient);
             List<string> AppsToAdd = [];
@@ -135,7 +148,7 @@ public partial class RestoreBgEduGroupAccess : DependencyCmdlet<GraphStartup>
             }
             if (shouldRemoveOwner)
             {
-                logger?.LogInformation("Removing current user as owner from group {GroupId}", Id);
+                logger?.LogDebug("Removing current user as owner from group {GroupId}", Id);
                 await graphClient.Groups[Id].Owners[Commands.ConnectBgGraph.CurrentUserId!].Ref.DeleteAsync(cancellationToken: cancellationToken);
             }
         }
